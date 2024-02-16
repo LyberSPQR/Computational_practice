@@ -50,7 +50,7 @@ void findingSqrt2(double x1, double x2, double b, double s)
 		x1 = x2;
 
 		coun++;
-		cout << " Func= " << func << endl;
+		cout << " (b)(Func= " << func << endl;
 		cout << "(b) X= " << x2 << endl;
 		cout << " (b) K_iter= " << coun << endl;
 	}
