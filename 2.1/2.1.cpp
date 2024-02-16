@@ -19,7 +19,7 @@ int main()
 		cout << "Incorrect shift";
 		return 0;
 	}
-	int* mass{ new int[n + k] };
+	int* mass = new int[n + k];
 	for (int i = 0; i < n; i++)
 	{
 		mass[i] = i;

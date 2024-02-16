@@ -1,4 +1,4 @@
-﻿// 1.4 Обеспечить перегрузку и шаблоны необходимых функций для выполнения задания с типами элементов массивов char, int, float, double.
+﻿// 1.4Обеспечить перегрузку и шаблоны необходимых функций для выполнения задания с типами элементов массивов char, int, float, double.
 
 #include <iostream>
 using namespace std;
@@ -132,7 +132,7 @@ template<typename T> void fillingMassRand(T mass[N])
 	}
 }
 
- void massOutput(int mass[N])
+template<typename T> void massOutput(T mass[N])
 {
 	for (int i = 0; i <= N - 1; i++)
 	{
@@ -147,6 +147,7 @@ template<typename T> void BubbleSortArray(T mass[N])
 	{
 		for (int i = 0; i < N - 1; i++)
 		{
+
 			if (mass[i] > mass[i + 1])
 			{
 
