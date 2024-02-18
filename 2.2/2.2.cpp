@@ -92,6 +92,7 @@ int main()
 		cout << "Введено некорректное значение" << endl;
 		return 0;
 	}
+	// проверка на отправку коммита
 }
 
 void fillingArray(int rows, int columns, int Array[])
