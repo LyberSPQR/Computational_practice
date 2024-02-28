@@ -1,31 +1,28 @@
-﻿// 2.3 TEST
-// Разбить текст на слова и записать их новую строку в обратном порядке,
-// используя связанную динамическую структуру данных – стек.
-// Выполнить задание для введенной строки символов.
-
-#define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <stack>
-#include <string.h>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <iostream> // for cin cout
+#include <string>
 
 using namespace std;
 
-struct Node            // описание элемента стека
+struct Node  // описание элемента очереди аналогичен стеку
 {
 	char word[20];
-
-	Node* p;
+	Node* p;   // указатель на следующий элемент очереди
 };
 
-void  push2(Node*&, char dn[]);
-void pop2(Node*& top);
+void   first2(Node*&, char wordus[]);
+void   add2(Node*& end, char wordus[]);
+void   vyvod_ochered(Node* top);
+
+void    del2(Node*& top);
 
 int main()
 {
-	Node* top = NULL;
+	Node* top = NULL, * end;
+
 	setlocale(LC_ALL, "ru");
 	const int size = 50;
-	int choice, num = 0, cntr = 2, letterCounter = 0;
+	int  num = 0, cntr = 2, queueCouner = 0, progCounter = 0, letterCounter = 0;
 	char** ArrayPtr = new char* [size];
 	char arrayword[100];
 
@@ -34,6 +31,7 @@ int main()
 
 	char stringus[size];
 	int  wordAmount = 1, counter = 0;
+
 
 	for (int j = 0; j < size; j++)
 	{
@@ -66,7 +64,7 @@ int main()
 				counter++;
 			}
 		}
-		
+
 	}
 
 	cout << "WordAmount = " << wordAmount << endl;
@@ -74,6 +72,7 @@ int main()
 	for (int i = 0; i < wordAmount; i++) // заполнение массива
 	{
 		while (arrayword[counter] != ' ' && arrayword[counter] != '\0' && arrayword[counter] != ':' && arrayword[counter] != ';' && arrayword[counter] != '!' && arrayword[counter] != '?' && arrayword[counter] != '.' && arrayword[counter] != ',' && arrayword[counter] != '(' && arrayword[counter] != ')' && arrayword[counter] != '-')
+
 		{
 			ArrayPtr[i][j] = arrayword[counter];
 			j++;
@@ -81,8 +80,10 @@ int main()
 				counter++;
 			counter++;
 		}
+
 		j = 0;
 		counter++;
+
 	}
 
 	for (int i = 0; i < wordAmount; i++) // Output Array
@@ -113,49 +114,101 @@ int main()
 			word[j] = stringus[j];
 		}
 
-		push2(top, word);
+		for (int j = 0; word[j] != '\0'; j++)
+		{
+			num = j;
+		}
+
+		int wordLong = strlen(word);
+		char wordus[] = { 'x','y','z' };
+
+		for (int j = num; j >= num - 3; j--)
+		{
+			if (word[j] == wordus[cntr])
+			{
+				cntr--;
+				letterCounter++;
+			}
+		}
+		cntr = 2;
+
+		if (letterCounter == 3)
+		{
+			progCounter++;
+			if (queueCouner == 0)
+			{
+				first2(top, word);
+				end = top;
+			}
+
+			if (queueCouner > 0)
+			{
+				add2(end, word);
+			}
+			queueCouner++;
+		}
+		letterCounter = 0;
 	}
 
-	char ReversedText[100];
+	if (progCounter < 1)
+	{
+		cout << "No such words";
+		return 0;
+	}
+
+	char newString[100];
 	for (int j = 0; j < 100; j++)
 	{
-		ReversedText[j] = '\0';
+		newString[j] = '\0';
 	}
 
-	while (top != NULL)
+	while (top)
 	{
-		strcat(ReversedText, top->word);
-		strcat(ReversedText, " ");
-		pop2(top);
+		strcat(newString, top->word);
+		strcat(newString, " ");
+		del2(top);
 	}
 
-	cout << endl << "ReversedText: " << ReversedText << endl;
+	cout << endl << "newString: " << newString << endl;
 
 	for (int i = 0; i < size; i++)
 	{
 		delete[] ArrayPtr[i];
 	}
-
 	delete[] ArrayPtr;
 
 	return 0;
 }
 
-void push2(Node*& top, char dn[])	// функция занесения элемента в вершину стека
-{                  //    top – указатель начала стека
-	Node* pv = new Node; // выделение памяти для элемента
-	// стека
+// функция занесения первого элемента в очередь
+void first2(Node*& top, char wordus[])
+{
+	top = new Node;        //  выделение памяти
 	for (int i = 0; i < 20; i++)
 	{
-		pv->word[i] = dn[i];
+		top->word[i] = wordus[i];
+		top->p = NULL;
 	}
-	pv->p = top;     // связываем новый элемент с предыдущим 
-	top = pv;        // меняем адрес начала стека
+}
+// функция занесения элемента в конец очереди
+// end - адрес последнего элемента очереди
+void add2(Node*& end, char wordus[])
+{
+	Node* pv = new Node;      //  выделение памяти
+	for (int i = 0; i < 20; i++)
+	{
+		pv->word[i] = wordus[i];
+		pv->p = NULL;
+	}
+	// связываем с предыдущим элементом очереди
+	end->p = pv;
+	end = pv;           //  меняем адрес последнего элемента
 }
 
-void pop2(Node*& top)
-{                   //    top – указатель начала стека
-	Node* pv = top;
-	top = top->p;          // меняем адрес начала стека
-	delete pv;             // освобождение памяти
+void del2(Node*& top)	// функция удаления элемента из начала очереди
+{               //    top - указатель начала очереди
+	Node* pv;  //  функция аналогична функции для стека
+	pv = top;
+	top = top->p;      // меняем адрес начала очереди
+	delete pv;         // освобождение памяти
 }
