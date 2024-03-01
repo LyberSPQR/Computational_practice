@@ -1,10 +1,15 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-#include <iostream> // for cin cout
+﻿// 2.4
+// Разбить текст на слова и записать их новую строку,
+// используя связанную динамическую структуру данных – очередь.
+// Выполнить задание для введенной строки символов.
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream> 
 #include <string>
 
 using namespace std;
 
-struct Node  // описание элемента очереди аналогичен стеку
+struct Node  // описание элемента очереди
 {
 	char word[20];
 	Node* p;   // указатель на следующий элемент очереди
@@ -76,7 +81,7 @@ int main()
 		{
 			ArrayPtr[i][j] = arrayword[counter];
 			j++;
-			if (arrayword[counter + 1] == ' ' || arrayword[counter + 1] == ':' || arrayword[counter + 1] == ';' || arrayword[counter + 1] == '!' || arrayword[counter + 1] == '?' || arrayword[counter + 1] == '.' || arrayword[counter + 1] == ',' || arrayword[counter + 1] == '(' || arrayword[counter + 1] == ')' || arrayword[counter + 1] == '-')
+			if ( arrayword[counter + 1] == ':' || arrayword[counter + 1] == ';' || arrayword[counter + 1] == '!' || arrayword[counter + 1] == '?' || arrayword[counter + 1] == '.' || arrayword[counter + 1] == ',' || arrayword[counter + 1] == '(' || arrayword[counter + 1] == ')' || arrayword[counter + 1] == '-')
 				counter++;
 			counter++;
 		}
@@ -187,8 +192,8 @@ void first2(Node*& top, char wordus[])
 	for (int i = 0; i < 20; i++)
 	{
 		top->word[i] = wordus[i];
-		top->p = NULL;
 	}
+	top->p = NULL;
 }
 // функция занесения элемента в конец очереди
 // end - адрес последнего элемента очереди
@@ -198,8 +203,8 @@ void add2(Node*& end, char wordus[])
 	for (int i = 0; i < 20; i++)
 	{
 		pv->word[i] = wordus[i];
-		pv->p = NULL;
 	}
+	pv->p = NULL;
 	// связываем с предыдущим элементом очереди
 	end->p = pv;
 	end = pv;           //  меняем адрес последнего элемента

@@ -1,16 +1,15 @@
-﻿// 2.3 TEST
+﻿// 2.3
 // Разбить текст на слова и записать их новую строку в обратном порядке,
 // используя связанную динамическую структуру данных – стек.
 // Выполнить задание для введенной строки символов.
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <stack>
 #include <string.h>
 
 using namespace std;
 
-struct Node            // описание элемента стека
+struct Node           
 {
 	char word[20];
 
@@ -77,7 +76,7 @@ int main()
 		{
 			ArrayPtr[i][j] = arrayword[counter];
 			j++;
-			if (arrayword[counter + 1] == ' ' || arrayword[counter + 1] == ':' || arrayword[counter + 1] == ';' || arrayword[counter + 1] == '!' || arrayword[counter + 1] == '?' || arrayword[counter + 1] == '.' || arrayword[counter + 1] == ',' || arrayword[counter + 1] == '(' || arrayword[counter + 1] == ')' || arrayword[counter + 1] == '-')
+			if ( arrayword[counter + 1] == ':' || arrayword[counter + 1] == ';' || arrayword[counter + 1] == '!' || arrayword[counter + 1] == '?' || arrayword[counter + 1] == '.' || arrayword[counter + 1] == ',' || arrayword[counter + 1] == '(' || arrayword[counter + 1] == ')' || arrayword[counter + 1] == '-')
 				counter++;
 			counter++;
 		}
@@ -143,11 +142,10 @@ int main()
 
 void push2(Node*& top, char dn[])	// функция занесения элемента в вершину стека
 {                  //    top – указатель начала стека
-	Node* pv = new Node; // выделение памяти для элемента
-	// стека
+	Node* pv = new Node; // выделение памяти для элемента стека
 	for (int i = 0; i < 20; i++)
 	{
-		pv->word[i] = dn[i];
+		pv->word[i] = dn[i]; //*(pv).word[i]
 	}
 	pv->p = top;     // связываем новый элемент с предыдущим 
 	top = pv;        // меняем адрес начала стека
